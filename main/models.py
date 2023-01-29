@@ -17,6 +17,7 @@ class Blog(models.Model):
     title = models.CharField(max_length=100000)
     category = models.ForeignKey(Category, related_name="category", on_delete=models.CASCADE)
     author = models.ForeignKey(User, related_name="author", on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)
     snippet = models.TextField()
     body = RichTextField()
 
@@ -26,6 +27,7 @@ class Blog(models.Model):
 class Comment(models.Model):
     blog = models.ForeignKey(Blog, related_name="comments", on_delete=models.CASCADE)
     name = models.CharField(max_length=1000)
+    created_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)
     body = models.TextField()
 
     def __str__(self):
