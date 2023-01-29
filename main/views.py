@@ -21,3 +21,23 @@ class BlogListView(generics.ListAPIView):
     queryset = Blog.objects.all()
     serializer_class = BlogListSerializer
     permission_classes = [permissions.AllowAny]
+
+class BlogCreateView(generics.CreateAPIView):
+    queryset = Blog.objects.all()
+    serializer_class = AddBlogPostSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+class BlogDetailView(APIView):
+    def get(self, request, format=None, **kwargs):
+        blog = Blog.objects.filter(id = kwargs["id"]).first()
+        serializer = BlogPostSerializer(instance=blog)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def post(self, request):
+        serializer = AddCommentSerializer(data=request.data)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
