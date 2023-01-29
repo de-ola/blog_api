@@ -13,9 +13,9 @@ class CategoryView(generics.ListAPIView):
 
 class BlogCategoryView(APIView):
     def get(self, request, format=None, **kwargs):
-        blog = Blog.objects.filter(category__id = kwargs("id"))
+        blog = Blog.objects.filter(category__id = kwargs["id"])
         serializer = BlogListSerializer(instance=blog, many=True)
-        return Response(serializer, status=status.HTTP_200_OK)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 class BlogListView(generics.ListAPIView):
     queryset = Blog.objects.all()
