@@ -16,7 +16,7 @@ class Category(models.Model):
 class Blog(models.Model):
     title = models.CharField(max_length=100000)
     category = models.ForeignKey(Category, related_name="category", on_delete=models.CASCADE)
-    author = models.ForeignKey(User, related_name="author", on_delete=models.CASCADE)
+    author = models.ForeignKey(User, related_name="blog", on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)
     snippet = models.TextField()
     body = RichTextField()

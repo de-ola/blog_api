@@ -1,5 +1,7 @@
 from rest_framework import serializers
 from .models import User
+from main.models import *
+from main.serializers import *
 from rest_framework.validators import UniqueValidator
 from django.contrib.auth.password_validation import validate_password
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
@@ -114,6 +116,7 @@ class UpdateUserSerializer(serializers.ModelSerializer):
         return instance
 
 class UserProfileSerializer(serializers.ModelSerializer):
+    blog = BlogListSerializer(read_only=True, many=True)
     change_password = serializers.HyperlinkedIdentityField(view_name='change_password', lookup_field = 'pk')
     update_profile = serializers.HyperlinkedIdentityField(view_name='update_profile', lookup_field = 'pk')
     class Meta:
@@ -126,4 +129,5 @@ class UserProfileSerializer(serializers.ModelSerializer):
             'email',
             'change_password',
             'update_profile',
+            'blog',
         ]
